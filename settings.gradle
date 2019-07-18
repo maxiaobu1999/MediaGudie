@@ -1,1 +1,3 @@
-include ':app', ':lib_runtime'
+include ':app'
+include ':lib_runtime'
+include ':audio'

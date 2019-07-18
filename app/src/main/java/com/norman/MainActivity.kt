@@ -1,12 +1,14 @@
 package com.norman
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import com.norman.audio.AdMainActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
@@ -33,7 +35,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        addButton("...").setOnClickListener {
+        addButton("音频相关").setOnClickListener {
+            val intent= Intent(this@MainActivity,AdMainActivity::class.java)
+            startActivity(intent)
         }
 
 
