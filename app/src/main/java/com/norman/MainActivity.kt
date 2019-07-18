@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         val subscribe = rxPermissions
             .requestEach(
                 Manifest.permission.CAMERA,
-                Manifest.permission.READ_PHONE_STATE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
             )
             .subscribe { // will emit 2 Permission objects
                     permission ->
