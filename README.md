@@ -10,7 +10,7 @@
 
 6. 学习 Android 平台 OpenGL ES API，学习纹理绘制，能够使用 OpenGL 显示一张图片
 
-7. 学习 MediaCodec API，完成音频 AAC 硬编、硬解
+7. 学习 MediaCodec API，完成音频 AAC 硬编、硬解 done
 
 8. 学习 MediaCodec API，完成视频 H.264 的硬编、硬解
 

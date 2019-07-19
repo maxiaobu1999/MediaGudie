@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.norman.camera">
+
+    <application>
+        <activity android:name=".CmCaptureActivity">
+        </activity>
+        <activity android:name=".CmMainActivity">
+        </activity>
+    </application>
+
+</manifest>

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.norman.audio.AdMainActivity
+import com.norman.camera.CmMainActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity() {
 
         addButton("音频相关").setOnClickListener {
             val intent= Intent(this@MainActivity,AdMainActivity::class.java)
+            startActivity(intent)
+        }
+
+        addButton("相机相关").setOnClickListener {
+            val intent= Intent(this@MainActivity,CmMainActivity::class.java)
             startActivity(intent)
         }
 
