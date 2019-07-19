@@ -3,6 +3,11 @@
           package="com.norman.audio">
 
     <application>
+        <activity
+                android:name=".AdRecordActivity"
+                android:label="@string/title_activity_ad_audio_record"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".AdMainActivity">
         </activity>
     </application>

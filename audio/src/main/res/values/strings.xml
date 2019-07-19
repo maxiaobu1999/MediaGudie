@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Audio</string>
+    <string name="title_activity_ad_audio_record">AdAudioRecordActivity</string>
 </resources>

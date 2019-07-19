@@ -1,6 +1,7 @@
 package com.norman.audio;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,9 +19,10 @@ public class AdMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ad_main);
         mActivity = this;
 
-        addButton("..").setOnClickListener(new View.OnClickListener() {
+        addButton("音频录制 AudioRecord").setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(mActivity, AdRecordActivity.class));
             }
         });
     }
