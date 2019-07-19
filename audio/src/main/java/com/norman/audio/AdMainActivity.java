@@ -25,6 +25,13 @@ public class AdMainActivity extends AppCompatActivity {
                 startActivity(new Intent(mActivity, AdRecordActivity.class));
             }
         });
+
+        addButton("音频编解码 MediaCodec").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, AdCodecActivity.class));
+            }
+        });
     }
 
     private Button addButton(String string) {

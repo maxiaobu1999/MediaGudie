@@ -7,3 +7,6 @@
 5、缓冲区大小:音频数据写入缓冲区的总数，可以通过AudioRecord.getMinBufferSize获取最小的缓冲区。（将音频采集到缓冲区中然后再从缓冲区中读取）。
 
 #AudioTrack  音频播放
+
+#硬编码  使用非CPU进行编码，如显卡GPU、专用的DSP、FPGA、ASIC芯片等
+软编码：使用CPU进行编码 
