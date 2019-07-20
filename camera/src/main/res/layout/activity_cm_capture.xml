@@ -1,10 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".CmCaptureActivity">
 
-</android.support.constraint.ConstraintLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ugc_capture_root"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ugc_common_black"
+                tools:context=".CmCaptureActivity">
+
+    <FrameLayout
+            android:id="@+id/fl_surface_holder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
+
+    <ImageView
+            android:id="@+id/cancel_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14.78dp"
+            android:layout_marginTop="8.7dp"
+            android:src="@drawable/ugc_capture_cancel_selector"/>
+
+    <ImageView
+            android:id="@+id/switch_camera_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="14.78dp"
+            android:layout_marginTop="8.7dp"
+            android:src="@drawable/ugc_switch_camera_selector"/>
+
+    <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/ugc_video_timelong_bg"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:textColor="@color/ugc_capture_tip"
+            android:textSize="11dp"
+            android:visibility="gone"/>
+
+    <View
+            android:id="@+id/ugc_progressbar_three_prompt"
+            android:layout_width="1dp"
+            android:layout_height="5dp"
+            android:background="@color/ugc_white"
+            android:visibility="gone"/>
+
+    <ProgressBar
+            android:id="@+id/ugc_record_video_progressbar"
+            style="@style/ugc_record_video_portrait_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/ugc_record_video_progress_color"
+            android:visibility="gone"/>
+
+
+    <RelativeLayout
+            android:id="@+id/ugc_capture_camera_layout"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp">
+
+        <ImageView
+                android:id="@+id/record_normal_iv"
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ugc_capture_normal"/>
+
+        <ImageView
+                android:id="@+id/ugc_capture_camera_enter_album"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:padding="3dp"
+                android:src="@drawable/ugc_capture_enter_album_selector"
+                android:visibility="gone"/>
+
+        <TextView
+                android:id="@+id/ugc_album_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/ugc_capture_camera_enter_album"
+                android:layout_marginRight="15dp"
+                android:text="相册"
+                android:textColor="@color/ugc_white"
+                android:textSize="11dp"
+                android:visibility="visible"/>
+
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ugc_capture_camera_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/ugc_capture_prompt_bg"
+            android:gravity="center_horizontal"
+            android:textColor="@color/ugc_capture_tip"
+            android:textSize="12dp"
+            android:paddingTop="5dp"
+            android:visibility="gone"/>
+</RelativeLayout>

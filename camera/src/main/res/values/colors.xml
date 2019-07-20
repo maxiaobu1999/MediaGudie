@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ugc_common_black">#000000</color>
+    <color name="ugc_video_upload_shadow_color">#80000000</color>
+    <color name="ugc_capture_tip">#ffffff</color>
+    <color name="ugc_white">#ffffff</color>
+    <color name="ugc_record_video_progress_color">#33ffffff</color>
+    <color name="ugc_publish_action_color">#3c76ff</color>
+
+</resources>
