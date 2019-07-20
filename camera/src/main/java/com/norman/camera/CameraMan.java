@@ -5,10 +5,14 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.media.MediaRecorder;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Surface;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -57,6 +61,8 @@ public class CameraMan {
 //    private int mCameraId;
     /** 是否开启闪光灯 */
     boolean mIsFlashMode;
+    private MediaRecorder mMediaRecorder;
+
     /**
      * @param whichCamera 开启哪个摄像头 0后置像头 1前置像头
      * @return 摄像头id
@@ -144,6 +150,72 @@ public class CameraMan {
 
     }
 
+    public void stopPreview() {
+        try {
+            if (mCamera != null) {
+                mCamera.setPreviewCallback(null);
+                mCamera.stopPreview();
+                mCamera.release();
+                mCamera = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void takePicture(final File outputPath) {
+        //在拍照的瞬间被回调，这里通常可以播放"咔嚓"这样的拍照音效。
+        Camera.ShutterCallback shutter = new Camera.ShutterCallback() {
+            @Override
+            public void onShutter() {
+
+            }
+        };
+
+        //返回未经压缩的图像数据。
+        Camera.PictureCallback raw = new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+
+            }
+        };
+
+        //返回postview类型的图像数据
+        Camera.PictureCallback postview = new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+
+            }
+        };
+
+        //返回经过JPEG压缩的图像数据。一般用的就是这个最后一个
+        Camera.PictureCallback jpeg = new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                //存储返回的图像数据
+                final File pictureFile = outputPath;
+                if (pictureFile == null) {
+                    Log.d(TAG, "Error creating media file, check storage permissions.");
+                    return;
+                }
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(pictureFile);
+                    fileOutputStream.write(data);
+                    fileOutputStream.close();
+                } catch (FileNotFoundException error) {
+                    Log.e(TAG, "File not found: " + error.getMessage());
+                } catch (IOException error) {
+                    Log.e(TAG, "Error accessing file: " + error.getMessage());
+                } catch (Throwable error) {
+                    Log.e(TAG, "Error saving file: " + error.getMessage());
+                }
+            }
+        };
+
+        mCamera.takePicture(shutter,raw,postview,jpeg);
+    }
+
 
     /**
      * 判断是否支持闪光灯
@@ -200,5 +272,89 @@ public class CameraMan {
     }
 
 
+    // TODO: 2019-07-20 配置优化
+    public void startRecorder(Context context, File output){
+        mMediaRecorder = new MediaRecorder();
+//        try {
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+            mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
 
+            //输出格式
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            //视频帧率
+            mMediaRecorder.setVideoFrameRate(30);
+            //视频宽高
+            mMediaRecorder.setVideoSize(TARGET_WIDTH, TARGET_HEIGHT);
+            //视频比特率
+            mMediaRecorder.setVideoEncodingBitRate((int) (2.0 * TARGET_WIDTH * TARGET_HEIGHT));
+            //视频编码器
+            mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+
+            //音频编码率
+            mMediaRecorder.setAudioEncodingBitRate(44100*2);
+            //音频声道
+            mMediaRecorder.setAudioChannels(2);
+            //音频采样率
+            mMediaRecorder.setAudioSamplingRate(44100);
+            //音频编码器
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+
+            File outputFile = output;
+            String outputFilePath = outputFile.toString();
+            //输出路径
+            mMediaRecorder.setOutputFile(outputFilePath);
+
+//            //设置视频输出的最大尺寸
+//            if (mCameraConfigProvider.getVideoFileSize() > 0) {
+//                mediaRecorder.setMaxFileSize(mCameraConfigProvider.getVideoFileSize());
+//                mediaRecorder.setOnInfoListener(this);
+//            }
+//
+//            //设置视频输出的最大时长
+//            if (mCameraConfigProvider.getVideoDuration() > 0) {
+//                mediaRecorder.setMaxDuration(mCameraConfigProvider.getVideoDuration());
+//                mediaRecorder.setOnInfoListener(this);
+//            }
+            // 视频方向调整
+            int orientation = ((Activity) context).getWindowManager().getDefaultDisplay().getRotation();
+//            if (mIsCameraFront) {
+//                mediaRecorder.setOrientationHint(FRONT_VIDEO_ORIENTATIONS.get(orientation));
+//            } else {
+                mMediaRecorder.setOrientationHint(DEFAULT_ORIENTATIONS.get(orientation));
+//            }
+
+            //准备
+        try {
+            mMediaRecorder.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        } catch (IllegalStateException error) {
+//            Log.e(TAG, "IllegalStateException preparing MediaRecorder: " + error.getMessage());
+//        } catch (IOException error) {
+//            Log.e(TAG, "IOException preparing MediaRecorder: " + error.getMessage());
+//        } catch (Throwable error) {
+//            Log.e(TAG, "Error during preparing MediaRecorder: " + error.getMessage());
+//        }
+        //MediaRecorder初始化完成
+
+        mMediaRecorder.start();
+//        isVideoRecording = true;
+//        uiHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                videoListener.onVideoRecordStarted(videoSize);
+//            }
+//        });
+    }
+
+
+    public void stopRecoder(){
+        mMediaRecorder.stop();
+        mMediaRecorder.reset();
+        // 释放资源
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+    }
 }

@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/ugc_capture_camera_enter_album"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="40dp"
                 android:text="相册"
                 android:textColor="@color/ugc_white"
                 android:textSize="11dp"
