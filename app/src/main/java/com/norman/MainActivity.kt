@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.norman.audio.AdMainActivity
 import com.norman.camera.CmMainActivity
+import com.norman.rtmp.RtmpMainActivity
 import com.tbruyelle.rxpermissions2.RxPermissions
 
 
@@ -47,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        addButton("rtmp推流协议").setOnClickListener {
+            val intent= Intent(this@MainActivity,RtmpMainActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
