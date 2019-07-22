@@ -10,6 +10,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
 
@@ -19,7 +20,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    externalNativeBuild {
+        cmake {
+            // 指定总CMake编译配置文件路径
+            path "src/main/jni/CMakeLists.txt"
+        }
+    }
 }
 
 dependencies {

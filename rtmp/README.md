@@ -1,0 +1,3 @@
+native代码变更后需执行
+./gradlew externalNativeBuildDebug
+./gradlew rtmp:externalNativeBuildDebug

@@ -13,6 +13,12 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //指定把什么类型的so打包进apk
+            abiFilters 'armeabi-v7a'
+
+        }
     }
     buildTypes {
         release {
