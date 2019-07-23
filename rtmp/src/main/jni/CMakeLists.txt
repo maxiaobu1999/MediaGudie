@@ -1,11 +1,11 @@
-#status表示这是一般的打印信息，我们还可以设置为“ERROR”
-MESSAGE( ERROR "总CMakeList.txt开始执行")
-
-#定义变量及输出
-SET(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake)
-MESSAGE( STATUS "项目路径为：${CMAKE_MODULE_PATH}")
-SET(USER_KEY "Hello World")
-MESSAGE( STATUS "定义的变量USER_KEY = ${USER_KEY}.")
+##status表示这是一般的打印信息，我们还可以设置为“ERROR”
+#MESSAGE( ERROR "总CMakeList.txt开始执行")
+#
+##定义变量及输出
+#SET(CMAKE_MODULE_PATH  ${PROJECT_SOURCE_DIR}/cmake)
+#MESSAGE( STATUS "项目路径为：${CMAKE_MODULE_PATH}")
+#SET(USER_KEY "Hello World")
+#MESSAGE( STATUS "定义的变量USER_KEY = ${USER_KEY}.")
 
 
 
@@ -13,10 +13,11 @@ MESSAGE( STATUS "定义的变量USER_KEY = ${USER_KEY}.")
 cmake_minimum_required(VERSION 3.4.1)
 
 add_library(
-        rtmp-jni # 指定so库的名称为（librtmp-jni.so）
+        # 指定so库的名称为（libnorman-rtmp-jni.so）
+        norman-rtmp-jni
         SHARED # 设置为分享库
         # 指定C源文件的路径
-        rtmp_dump_jni.c
+        norman_rtmp_jni.c
 )
 
 find_library(
@@ -25,10 +26,12 @@ find_library(
 )
 
 # 链接hello-jni库依赖的库，注意下面变量名的配置
-target_link_libraries(rtmp-jni
+target_link_libraries(norman-rtmp-jni
 #        ${android-lib}
         ${log-lib}
 )
+# 添加 math 子目录
+add_subdirectory(LibRtmp_Client_for_android)
 
 
 
