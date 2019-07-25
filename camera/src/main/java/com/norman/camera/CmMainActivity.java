@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import com.alibaba.android.arouter.facade.annotation.Route;
 
+@Route(path = "/cm/CmMainActivity")
 public class CmMainActivity extends AppCompatActivity {
     public static final String TAG = "CmMainActivity+++:";
     private Activity mActivity;

@@ -14,6 +14,12 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
         ndk {
             //指定把什么类型的so打包进apk
             abiFilters 'armeabi-v7a'
@@ -42,11 +48,13 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation "com.alibaba:arouter-api:$rootProject.ext.arouterApi"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompiler"
 
     implementation project(path: ':lib_runtime')
-//    implementation project(path: ':audio')
-//    implementation project(path: ':camera')
+    implementation project(path: ':audio')
+    implementation project(path: ':camera')
     implementation project(path: ':rtmp')
-//    implementation project(path: ':opengl')
+    implementation project(path: ':opengl')
 
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import com.alibaba.android.arouter.launcher.ARouter
 import com.norman.audio.AdMainActivity
 import com.norman.camera.CmMainActivity
 import com.norman.rtmp.RtmpMainActivity
@@ -39,18 +40,20 @@ class MainActivity : AppCompatActivity() {
             }
 
         addButton("音频相关").setOnClickListener {
-            val intent= Intent(this@MainActivity,AdMainActivity::class.java)
-            startActivity(intent)
+            ARouter.getInstance().build("/ad/AdMainActivity").navigation();
         }
 
         addButton("相机相关").setOnClickListener {
-            val intent= Intent(this@MainActivity,CmMainActivity::class.java)
-            startActivity(intent)
+            ARouter.getInstance().build("/cm/CmMainActivity").navigation();
         }
 
         addButton("rtmp推流协议").setOnClickListener {
-            val intent= Intent(this@MainActivity,RtmpMainActivity::class.java)
-            startActivity(intent)
+            // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
+            ARouter.getInstance().build("/rtmp/RtmpMainActivity").navigation();
+        }
+        addButton("opengl使用").setOnClickListener {
+            // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
+            ARouter.getInstance().build("/opengl/OpenglMainActivity").navigation();
         }
 
     }

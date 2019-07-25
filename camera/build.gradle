@@ -10,6 +10,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //arouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        ndk {
+            //指定把什么类型的so打包进apk
+            abiFilters 'armeabi-v7a'
+
+        }
     }
 
 
@@ -30,5 +41,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "com.alibaba:arouter-api:$rootProject.ext.arouterApi"
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.ext.arouterCompiler"
+
     implementation project(path: ':lib_runtime')
 }

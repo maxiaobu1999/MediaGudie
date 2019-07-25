@@ -36,6 +36,9 @@ ext {
 
     minSdkVersion = 17
 
+    arouterApi="1.5.0"
+    arouterCompiler="1.2.2"
+
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 }
