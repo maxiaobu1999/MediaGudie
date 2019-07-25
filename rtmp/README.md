@@ -2,7 +2,9 @@ native代码变更后需执行
 ./gradlew externalNativeBuildDebug
 ./gradlew rtmp:externalNativeBuildDebug
 
-
+todo 推流 拉流播放
+https://www.jianshu.com/p/cc5e71054993 
+https://www.jianshu.com/p/53ddf0831d2c
 
 #Makefile
 执行Makefile的命令
