@@ -3,6 +3,8 @@
           package="com.norman.opengl">
 
     <application>
+        <activity android:name=".OpenGLActivity">
+        </activity>
         <activity android:name=".OpenglMainActivity">
         </activity>
     </application>
