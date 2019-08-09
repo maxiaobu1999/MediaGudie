@@ -3,7 +3,11 @@
           package="com.norman.audio">
 
     <application>
-        <activity android:name=".AdCodecActivity">
+        <activity android:name=".audiorecord.AudioRecordActivity">
+        </activity>
+        <activity android:name=".audiotrack.AudioTrackActivity">
+        </activity>
+        <activity android:name=".codec.AdCodecActivity">
         </activity>
         <activity
                 android:name=".AdRecordActivity"

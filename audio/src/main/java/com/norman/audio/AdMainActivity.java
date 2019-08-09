@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.norman.audio.audiotrack.AudioTrackActivity;
+import com.norman.audio.codec.AdCodecActivity;
 
 @Route(path = "/ad/AdMainActivity")
 public class AdMainActivity extends AppCompatActivity {
@@ -32,6 +34,13 @@ public class AdMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mActivity, AdCodecActivity.class));
+            }
+        });
+
+        addButton("音频播放 AudioTrack").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, AudioTrackActivity.class));
             }
         });
     }

@@ -8,5 +8,9 @@
 
 #AudioTrack  音频播放
 
+#MediaMuxer 音频混合
+
+#MediaCodec 音频编解码
+
 #硬编码  使用非CPU进行编码，如显卡GPU、专用的DSP、FPGA、ASIC芯片等
 软编码：使用CPU进行编码 

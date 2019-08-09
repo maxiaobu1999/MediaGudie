@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class AudioCodec {
 
 
-    private static final String TAG = "AudioCodec";
+    private static final String TAG = "AudioCodec+++:";
     /** 编码格式 */
     private String encodeType;
     /** 原文件路径 */
@@ -231,19 +231,21 @@ public class AudioCodec {
      */
     private void srcAudioFormatToPCM() {
         for (int i = 0; i < decodeInputBuffers.length-1; i++) {
-            int inputIndex = mediaDecode.dequeueInputBuffer(-1);//获取可用的inputBuffer -1代表一直等待，0表示不等待 建议-1,避免丢帧
+            //获取可用的inputBuffer -1代表一直等待，0表示不等待 建议-1,避免丢帧
+            int inputIndex = mediaDecode.dequeueInputBuffer(-1);
             if (inputIndex < 0) {
                 codeOver =true;
                 return;
             }
 
             ByteBuffer inputBuffer = decodeInputBuffers[inputIndex];//拿到inputBuffer
-            inputBuffer.clear();//清空之前传入inputBuffer内的数据
+            inputBuffer.clear();//清空之前传入inputBuffeMediaExtractorr内的数据
             int sampleSize = mediaExtractor.readSampleData(inputBuffer, 0);//MediaExtractor读取数据到inputBuffer中
             if (sampleSize <0) {//小于0 代表所有数据已读取完成
                 codeOver=true;
             }else {
-                mediaDecode.queueInputBuffer(inputIndex, 0, sampleSize, 0, 0);//通知MediaDecode解码刚刚传入的数据
+                //通知MediaDecode解码刚刚传入的数据
+                mediaDecode.queueInputBuffer(inputIndex, 0, sampleSize, 0, 0);
                 mediaExtractor.advance();//MediaExtractor移动到下一取样处
                 decodeSize+=sampleSize;
             }
@@ -252,8 +254,6 @@ public class AudioCodec {
         //获取解码得到的byte[]数据 参数BufferInfo上面已介绍 10000同样为等待时间 同上-1代表一直等待，0代表不等待。此处单位为微秒
         //此处建议不要填-1 有些时候并没有数据输出，那么他就会一直卡在这 等待
         int outputIndex = mediaDecode.dequeueOutputBuffer(decodeBufferInfo, 10000);
-
-//        showLog("decodeOutIndex:" + outputIndex);
         ByteBuffer outputBuffer;
         byte[] chunkPCM;
         while (outputIndex >= 0) {//每次解码完成的数据不一定能一次吐出 所以用while循环，保证解码器吐出所有数据
@@ -306,11 +306,12 @@ public class AudioCodec {
             outputBuffer.limit(encodeBufferInfo.offset + outBitSize);
             chunkAudio = new byte[outPacketSize];
             addADTStoPacket(chunkAudio,outPacketSize);//添加ADTS 代码后面会贴上
-            outputBuffer.get(chunkAudio, 7, outBitSize);//将编码得到的AAC数据 取出到byte[]中 偏移量offset=7 你懂得
+            outputBuffer.get(chunkAudio, 7, outBitSize);//将编码得到的AAC数据 取出到byte[]中 偏移量offset=7
             outputBuffer.position(encodeBufferInfo.offset);
 //                showLog("outPacketSize:" + outPacketSize + " encodeOutBufferRemain:" + outputBuffer.remaining());
             try {
                 bos.write(chunkAudio,0,chunkAudio.length);//BufferOutputStream 将文件保存到内存卡中 *.aac
+                Log.d(TAG, UtilConversion.byte2hex(chunkAudio));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -323,16 +324,17 @@ public class AudioCodec {
 
     /**
      * 添加ADTS头
+     * 56bit 头文件都包含了音频的采样率，声道，帧长度等信息
+     *  ff f9 50 80 01 5f fc
      * @param packet
-     * @param packetLen
+     * @param packetLen 数组长度
      */
     private void addADTStoPacket(byte[] packet, int packetLen) {
         int profile = 2; // AAC LC
         int freqIdx = 4; // 44.1KHz
         int chanCfg = 2; // CPE
 
-
-// fill in ADTS data
+        // fill in ADTS data
         packet[0] = (byte) 0xFF;
         packet[1] = (byte) 0xF9;
         packet[2] = (byte) (((profile - 1) << 6) + (freqIdx << 2) + (chanCfg >> 2));

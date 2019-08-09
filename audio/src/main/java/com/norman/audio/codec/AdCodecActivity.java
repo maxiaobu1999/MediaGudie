@@ -1,15 +1,15 @@
-package com.norman.audio;
+package com.norman.audio.codec;
 
 import android.app.Activity;
-import android.media.MediaCodec;
-import android.media.MediaExtractor;
-import android.media.MediaFormat;
+import android.media.*;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.norman.audio.*;
+import com.norman.audio.audiotrack.AudioTrackHelper;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -22,10 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 
 /**
@@ -37,13 +34,18 @@ public class AdCodecActivity extends AppCompatActivity {
     public static final String TAG = "AdCodecActivity+++:";
     private static String MP3_URL = "http://54.183.236.104:8080/audio/jiuguan.mp3";
 
-    String mFilePath ;///storage/emulated/0/Android/data/com.norman/files/audio/song.mp3
-    String mMp3FileName = "song.mp3";
+    String mMp3FilePath;
+
+    private String mediaDirPath;//"/storage/emulated/0/Android/data/com.norman/files/media/"
 
 
     private Activity mActivity;
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private TextView mTvStatus;
+    private String mPcmFilePath;
+    private String mAacFilePath;
+    private  String mTempDirPath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,16 @@ public class AdCodecActivity extends AppCompatActivity {
         mActivity = this;
         mTvStatus = findViewById(R.id.tv_status);
 
-        mFilePath = mActivity.getExternalFilesDir("audio").getAbsolutePath()+"/";
+        mediaDirPath = mActivity.getExternalFilesDir("media").getAbsolutePath() + "/";
         //noinspection ResultOfMethodCallIgnored
-        new File(mFilePath).mkdirs();
-        
+        new File(mediaDirPath).mkdirs();
+        //"/storage/emulated/0/Android/data/com.norman/files/media/song.mp3"
+        mMp3FilePath = Environment.getExternalStorageDirectory() + "/norman/media/" + "sample.mp3";
+        mPcmFilePath = Environment.getExternalStorageDirectory() + "/norman/media/" + "sample.pcm";
+        mAacFilePath = Environment.getExternalStorageDirectory() + "/norman/media/" + "sample.aac";
+        mTempDirPath = Environment.getExternalStorageDirectory() + "/norman/temp/" ;
+        new File(mTempDirPath).mkdirs();
+
 
     }
 
@@ -67,13 +75,14 @@ public class AdCodecActivity extends AppCompatActivity {
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Request request = new Request.Builder().url(MP3_URL).build();
                 Response response = okHttpClient.newCall(request).execute();
-                InputStream is = null;
+                InputStream is;
                 byte[] buf = new byte[2048];
                 int len = 0;
-                FileOutputStream fos = null;
+                FileOutputStream fos;
                 is = response.body().byteStream();
                 long total = response.body().contentLength();
-                File file = new File(mFilePath+mMp3FileName);
+                File file = new File(mMp3FilePath);
+                file.createNewFile();
                 fos = new FileOutputStream(file);
                 long sum = 0;
                 while ((len = is.read(buf)) != -1) {
@@ -84,7 +93,6 @@ public class AdCodecActivity extends AppCompatActivity {
                     emitter.onNext(progress);
                 }
                 fos.flush();
-
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -93,7 +101,6 @@ public class AdCodecActivity extends AppCompatActivity {
                     @Override
                     public void accept(Integer integer) throws Exception {
                         mTvStatus.setText("正在下载mp3：progress="+integer);
-
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -104,24 +111,60 @@ public class AdCodecActivity extends AppCompatActivity {
                 });
         mCompositeDisposable.add(subscribe);
     }
-    /** 解码：mp3转aac */
+
+    /** mp3解码 sample.mp3 装成 temp.pcm*/
+    public void onMp3ToPCMClick(View view) throws IOException {
+        AudioCodecHelper helper = new AudioCodecHelper();
+        helper.decodeToPCM(mMp3FilePath,mTempDirPath+"/temp.pcm");
+    }
+
+    /** pcm解码成aac */
+    public void onPcmToAacClick(View view) throws IOException {
+        DeAudioCodec deAudioCodec = new DeAudioCodec();
+        deAudioCodec.mSrcFilePath = mMp3FilePath;
+        deAudioCodec.prepare();
+        deAudioCodec.startDecode();
+    }
+    /** 编解码：mp3转aac */
     public void onMp3ToAacClick(View view) throws IOException {
         final AudioCodec audioCodec=AudioCodec.newInstance();
         audioCodec.setEncodeType(MediaFormat.MIMETYPE_AUDIO_AAC);
-        audioCodec.setIOPath( mFilePath + mMp3FileName,mFilePath + "codec.aac");
+        audioCodec.setIOPath( mMp3FilePath , mediaDirPath + "song.aac");
         audioCodec.prepare();
         audioCodec.startAsync();
         audioCodec.setOnCompleteListener(new AudioCodec.OnCompleteListener() {
             @Override
             public void completed() {
+//                Toast.makeText(mActivity, "转码完成", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "转码完成");
                 audioCodec.release();
             }
         });
     }
 
+    /** 编解码：mp3转aac */
+    public void onPlayPCMClick(View view) throws IOException {
+        play();
+    }
+
+
+    /** 从mp3文件中获取一帧数据 */
+    public void onGetOneFrameFormMp3Click(View view) throws IOException {
+
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mCompositeDisposable.dispose();
+    }
+
+
+    private void play() throws IOException {
+        AudioTrackHelper mAudioTrackManager = new AudioTrackHelper();
+        mAudioTrackManager.prepare();
+        String pcmFilePath = Environment.getExternalStorageDirectory() + "/norman/media/"+"media.pcm";
+        mAudioTrackManager.play(mTempDirPath+"temp.pcm");
+
     }
 }

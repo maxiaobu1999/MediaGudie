@@ -1,0 +1,14 @@
+package com.norman.audio.audiorecord;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import com.norman.audio.R;
+
+public class AudioRecordActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_audio_record);
+    }
+}
