@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         addButton("音频相关").setOnClickListener {
             ARouter.getInstance().build("/ad/AdMainActivity").navigation();
         }
+        addButton("视频相关").setOnClickListener {
+            ARouter.getInstance().build("/video/VideoMainActivity").navigation();
+        }
 
         addButton("相机相关").setOnClickListener {
             ARouter.getInstance().build("/cm/CmMainActivity").navigation();

@@ -1,6 +1,7 @@
 include ':app'
 include ':lib_runtime'
 include ':audio'
+include ':video'
 //include ':camera'
 //include  ':rtmp'
 //include  ':opengl'
