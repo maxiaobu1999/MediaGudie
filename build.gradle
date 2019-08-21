@@ -34,7 +34,7 @@ ext {
     versionCode = 800800
     versionName = "0.8.8"
 
-    minSdkVersion = 17
+    minSdkVersion = 18
 
     arouterApi="1.5.0"
     arouterCompiler="1.2.2"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:id="@+id/container"
+        android:layout_height="match_parent"
+        tools:context=".VideoCodecActivity">
+
+    <TextView
+            android:id="@+id/tv_status"
+            android:text="当前状态：IDE"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+    />
+
+    <Button
+            android:id="@+id/btn_start"
+            android:text="视频解码"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="onExtractVideoClick"/>
+    <!--<Button-->
+    <!--android:id="@+id/btn_stop"-->
+    <!--android:text="停止录制"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:onClick="onStopClick"-->
+    <!--android:layout_height="50dp"/>-->
+    <!--<Button-->
+    <!--android:id="@+id/btn_play"-->
+    <!--android:text="播放"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:onClick="onPlayClick"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"/>-->
+    <!--<Button-->
+    <!--android:id="@+id/btn_finish"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="完成播放"-->
+    <!--android:onClick="onFinishClick"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"/>-->
+
+</LinearLayout>

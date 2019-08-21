@@ -21,26 +21,40 @@ public class VideoMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_main);
         mActivity = this;
 
-//        addButton("音频录制 AudioRecord").setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(mActivity, AdRecordActivity.class));
-//            }
-//        });
-//
-//        addButton("音频编解码 MediaCodec").setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(mActivity, AdCodecActivity.class));
-//            }
-//        });
-//
-//        addButton("音频播放 AudioTrack").setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(mActivity, AudioTrackActivity.class));
-//            }
-//        });
+        addButton("视频播放 VideoView").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, VideoViewActivity.class));
+            }
+        });
+        addButton("视频合成 Muxer").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, MuxerActivity.class));
+            }
+        });
+
+        addButton("视频编解码 MediaCodec").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, VideoCodecActivity.class));
+            }
+        });
+
+        addButton("视频播放 MediaPlayer").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, MediaPlayerActivity.class));
+            }
+        });
+        addButton("视频编码 MediaRecode").setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mActivity, MediaRecorderActivity.class));
+            }
+        });
+
+
     }
 
     private Button addButton(String string) {

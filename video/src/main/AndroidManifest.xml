@@ -3,6 +3,19 @@
           package="com.norman.video">
 
     <application>
+        <activity
+                android:name=".MediaRecorderActivity"
+                android:label="@string/title_activity_media_recode"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".VideoViewActivity">
+        </activity>
+        <activity android:name=".MediaPlayerActivity">
+        </activity>
+        <activity android:name=".VideoCodecActivity">
+        </activity>
+        <activity android:name=".MuxerActivity">
+        </activity>
         <activity android:name=".VideoMainActivity">
         </activity>
     </application>

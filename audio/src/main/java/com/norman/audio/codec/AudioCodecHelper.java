@@ -1,6 +1,7 @@
 package com.norman.audio.codec;
 
 import android.media.MediaCodec;
+import android.media.MediaCodecInfo;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
@@ -57,6 +58,8 @@ public class AudioCodecHelper {
                 if (mime.startsWith("audio")) {//获取音频轨道
                     mediaExtractor.selectTrack(i);//选择此音频轨道
                     mediaDecode = MediaCodec.createDecoderByType(mime);//创建Decode解码器
+                    format.setInteger(MediaFormat.KEY_COLOR_FORMAT,
+                            MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible);
                     mediaDecode.configure(format, null, null, 0);
                     Log.d(TAG, "format:" + format);
                     //format:{max-bitrate 比特率（码率）一个音频流中每秒钟能通过的数据量=320000, sample-rate 采样频率（hz）：采样次数 =44100, track-id=1, file-format=audio/mpeg,
